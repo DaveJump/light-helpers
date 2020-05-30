@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "removeComments": false,
+    "declaration": true,
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "baseUrl": ".",
+    "outDir": "./lib",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "declarationDir": "./lib/types",
+    "typeRoots" : [
+      "./node_modules/@types",
+      "./typings"
+    ]
+  },
+  "include": [
+    "src"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "modules": false // Preventing babel transform codes to CommonJs before rollup compiling to avoid compiling error
+      }
+    ]
+  ]
+}
