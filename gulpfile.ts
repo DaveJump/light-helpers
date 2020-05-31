@@ -1,24 +1,21 @@
+/// <reference types="./typings/conventional-changelog" />
+
 import fse from 'fs-extra'
 import gulp, { series } from 'gulp'
-import Undertaker from 'undertaker'
 import rollupConfig from './rollup.config'
 import { join, log } from './common/types-utils'
 import { rollup } from 'rollup'
 import typedoc from 'gulp-typedoc'
 import pkgConfig from './package.json'
+import conventionalChangelog from 'conventional-changelog'
 
-type TaskFunc = Undertaker.Task
-
-const paths = {
-  root: join('/'),
-  lib: join('/lib')
-}
+type TaskFunc = gulp.TaskFunction
 
 // Remove output dir first
 const clearLibDir: TaskFunc = async (cb) => {
-  fse.removeSync(paths.lib)
+  fse.removeSync(join('/lib'))
   cb()
-  log.done('Cleared directory /lib')
+  log.done('Directory \'/lib\' cleared')
 }
 
 // Building sources
@@ -34,7 +31,7 @@ const buildByRollup: TaskFunc = async (cb) => {
   if (Array.isArray(outOptions)) {
     await Promise.all(outOptions.map(outOption => bundle.write(outOption)))
     cb()
-    log.done('Build successfully')
+    log.done('Sources built')
   }
 }
 
@@ -50,4 +47,27 @@ const genDocs: TaskFunc = async (cb) => {
   log.done('Docs generated')
 }
 
-export const build = series(clearLibDir, buildByRollup, genDocs)
+// Generate changelog
+const genChangeLog: TaskFunc = async (cb) => {
+  const clPath: string = join('CHANGELOG.md')
+  const clPipe = await conventionalChangelog({
+    preset: 'angular',
+    releaseCount: 0
+  })
+  clPipe.setEncoding('utf-8')
+
+  const resultArray = ['# CHANGELOG\n\n']
+  clPipe.on('data', chunk => {
+    chunk = chunk.replace(/\/commits\//g, '/commit/')
+    resultArray.push(chunk)
+  })
+  clPipe.on('end', async () => {
+    await fse.createWriteStream(clPath).write(resultArray.join(''))
+    cb()
+    log.done('Changelog generated')
+  })
+}
+
+export const build = series(clearLibDir, buildByRollup, genDocs, genChangeLog)
+export const docs = genDocs
+export const changelog = genChangeLog
