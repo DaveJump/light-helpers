@@ -22,6 +22,7 @@ const checkBranchIsOnMaster: () => Promise<boolean> | void = async () => {
 }
 
 // Input version to release
+const defaultVersion = pkg.version.replace(/(\d+\.)(\d+)(\.\d+)/, (m, g1, g2, g3) => g1 + (+g2 + 1) + g3)
 const receiveVersion: () => Promise<string> = async () => {
   const answers = await inquirer.prompt([
     {
@@ -30,7 +31,7 @@ const receiveVersion: () => Promise<string> = async () => {
       message: `Enter release version (default to 'minor')`
     }
   ])
-  return answers.version.trim()
+  return answers.version.trim() || defaultVersion
 }
 
 const defaultCommitMsg = 'chore(all): release changes'
@@ -55,21 +56,19 @@ const checkUncommits: () => Promise<string> = async () => {
 }
 
 // Sync remote origin if there are uncommit changes
-const pushToRemote: (commitMsg?: string) => void = async (commitMsg = defaultCommitMsg) => {
+const pushToRemote: (commitMsg?: string) => Promise<void> = async (commitMsg = defaultCommitMsg) => {
   const spinner = log.processing.start('Pushing to remote origin...')
   await execCommand('git', ['add', '.'], 'pipe')
-  await execCommand('git', ['commit', '-m', `"${commitMsg}"`], 'pipe')
-  await execCommand('git', ['push', 'origin', '-u', 'master'], 'pipe')
+  // await execCommand('git', ['commit', '-m', `"${commitMsg}"`], 'pipe')
+  // await execCommand('git', ['push', 'origin', '-u', 'master'], 'pipe')
   spinner.stop()
 }
 
-
 // runVersion
-const defaultVersion = pkg.version.replace(/(\d+\.)(\d+)(\.\d+)/, (m, g1, g2, g3) => g1 + (+g2 + 1) + g3)
-const runVersion: (version?: string) => Promise<any> = async (version = defaultVersion) => {
+const runVersion: (version: string) => Promise<any> = async (version) => {
   const spinner = log.processing.start(`Releasing version ${version}`)
-  await execCommand('npm', ['version', `${version}`, '--message', `"[release] ${version}"`], 'pipe')
-  // await execSilently('npm publish --access=public')
+  await execCommand('npm', ['version', `${version}`, '--message', `"[release] ${version}"`], 'inherit')
+  // await execCommand('npm', ['publish', '--access', 'public'], 'pipe')
   spinner.stop()
 }
 

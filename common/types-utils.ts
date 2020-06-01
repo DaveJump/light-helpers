@@ -43,6 +43,7 @@ export async function execCommand(
       const child = execa(command, args, { cwd, stdio })
 
       child.on('close', code => {
+        console.log(code, '--code--')
         if (code !== 0) {
           reject(`command failed: ${command} ${args.join(' ')}`)
         }
