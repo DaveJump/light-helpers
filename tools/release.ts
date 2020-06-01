@@ -1,24 +1,9 @@
-import { exec } from 'shelljs'
+import { execCommand } from '../common/types-utils'
 import inquirer from 'inquirer'
 import getBranch from 'git-branch'
 import chalk from 'chalk'
 import { log } from '../common/types-utils'
 import pkg from '../package.json'
-
-const execSilently: (command: string) => Promise<string> = async (command) => {
-  return new Promise(resolve => {
-    exec(command, { silent: true }, (code, stdout, stderr) => {
-      if (stderr) {
-        console.log(
-          chalk.red(`\n\n${stderr}`)
-        )
-        process.exit(code || 1)
-      } else {
-        resolve(stdout)
-      }
-    })
-  })
-}
 
 // Check branch on 'master'
 const checkBranchIsOnMaster: () => Promise<boolean> | void = async () => {
@@ -52,8 +37,7 @@ const defaultCommitMsg = 'chore(all): release changes'
 
 // Check uncommit changes
 const checkUncommits: () => Promise<string> = async () => {
-  let uncommits = await execSilently('git status --porcelain')
-  uncommits = uncommits.replace(/\n+/g, '').trim()
+  let { stdout: uncommits } = await execCommand('git', ['status', '--porcelain'], 'pipe')
   if (uncommits) {
     console.log(
       chalk.yellow(`\n\nYou have uncommit changes, commit them to continue or exit and commit manually.`)
@@ -73,9 +57,9 @@ const checkUncommits: () => Promise<string> = async () => {
 // Sync remote origin if there are uncommit changes
 const pushToRemote: (commitMsg?: string) => void = async (commitMsg = defaultCommitMsg) => {
   const spinner = log.processing.start('Pushing to remote origin...')
-  await execSilently('git add .')
-  await execSilently(`git commit -m "${commitMsg}"`)
-  await execSilently('git push origin -u master')
+  await execCommand('git', ['add', '.'], 'pipe')
+  await execCommand('git', ['commit', '-m', `"${commitMsg}"`], 'pipe')
+  await execCommand('git', ['push', 'origin', '-u', 'master'], 'pipe')
   spinner.stop()
 }
 
@@ -84,7 +68,7 @@ const pushToRemote: (commitMsg?: string) => void = async (commitMsg = defaultCom
 const defaultVersion = pkg.version.replace(/(\d+\.)(\d+)(\.\d+)/, (m, g1, g2, g3) => g1 + (+g2 + 1) + g3)
 const runVersion: (version?: string) => Promise<any> = async (version = defaultVersion) => {
   const spinner = log.processing.start(`Releasing version ${version}`)
-  await execSilently(`npm version ${version} --message "[release] ${version}"`)
+  await execCommand('npm', ['version', `${version}`, '--message', `"[release] ${version}"`], 'pipe')
   // await execSilently('npm publish --access=public')
   spinner.stop()
 }
