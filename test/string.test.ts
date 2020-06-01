@@ -1,18 +1,20 @@
-import assert from 'assert'
 import { isString, capitalize, genUID } from '../src/string'
 
 describe('isString', () => {
   test("'str' => string", () => {
-    assert.strictEqual(isString('str'), true)
+    expect(isString('str')).toBe(true)
+  })
+  test('10 => !string', () => {
+    expect(isString(10)).not.toBe(true)
   })
 })
 
 describe('capitalize', () => {
   test("'cat' => 'Cat'", () => {
-    assert.strictEqual(capitalize('cat'), 'Cat')
+    expect(capitalize('cat')).toBe('Cat')
   })
   test("'a cat play with dog' => 'A Cat Play With Dog'", () => {
-    assert.strictEqual(capitalize('a cat play with dog'), 'A Cat Play With Dog')
+    expect(capitalize('a cat play with dog')).toBe('A Cat Play With Dog')
   })
 })
 

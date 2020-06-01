@@ -1144,6 +1144,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/git-branch@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.npm.taobao.org/@types/git-branch/download/@types/git-branch-2.0.1.tgz#9a38eb3024f30b567b92002f8b09e85d2acdbd2b"
+  integrity sha1-mjjrMCTzC1Z7kgAviwnoXSrNvSs=
+
 "@types/git-raw-commits@*":
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/@types/git-raw-commits/download/@types/git-raw-commits-2.0.0.tgz#157e9e4709db0748fb1aa623f8927ddd4864bac6"
@@ -1183,6 +1188,14 @@
     "@types/undertaker" "*"
     "@types/vinyl-fs" "*"
     chokidar "^2.1.2"
+
+"@types/inquirer@^6.5.0":
+  version "6.5.0"
+  resolved "https://registry.npm.taobao.org/@types/inquirer/download/@types/inquirer-6.5.0.tgz#b83b0bf30b88b8be7246d40e51d32fe9d10e09be"
+  integrity sha1-uDsL8wuIuL5yRtQOUdMv6dEOCb4=
+  dependencies:
+    "@types/through" "*"
+    rxjs "^6.4.0"
 
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.2"
@@ -1261,10 +1274,25 @@
   dependencies:
     "@types/node" "*"
 
+"@types/shelljs@^0.8.8":
+  version "0.8.8"
+  resolved "https://registry.npm.taobao.org/@types/shelljs/download/@types/shelljs-0.8.8.tgz#e439c69929b88a2c8123c1a55e09eb708315addf"
+  integrity sha1-5DnGmSm4iiyBI8GlXgnrcIMVrd8=
+  dependencies:
+    "@types/glob" "*"
+    "@types/node" "*"
+
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/@types/stack-utils/download/@types/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha1-CoUdO9lkmPolwzq3J47TvWXwbD4=
+
+"@types/through@*":
+  version "0.0.30"
+  resolved "https://registry.npm.taobao.org/@types/through/download/@types/through-0.0.30.tgz#e0e42ce77e897bd6aead6f6ea62aeb135b8a3895"
+  integrity sha1-4OQs536Je9aurW9upirrE1uKOJU=
+  dependencies:
+    "@types/node" "*"
 
 "@types/undertaker-registry@*":
   version "1.0.1"
@@ -3461,6 +3489,13 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
+git-branch@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npm.taobao.org/git-branch/download/git-branch-2.0.1.tgz#442724a97574c66ede4290ded75b7430785da08f"
+  integrity sha1-RCckqXV0xm7eQpDe11t0MHhdoI8=
+  dependencies:
+    findup-sync "^2.0.0"
+
 git-raw-commits@2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/git-raw-commits/download/git-raw-commits-2.0.0.tgz#d92addf74440c14bcc5c83ecce3fb7f8a79118b5"
@@ -3854,7 +3889,7 @@ ini@^1.3.2, ini@^1.3.4:
   resolved "https://registry.npm.taobao.org/ini/download/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
   integrity sha1-7uJfVtscnsYIXgwid4CD9Zar+Sc=
 
-inquirer@^7.0.0:
+inquirer@^7.0.0, inquirer@^7.1.0:
   version "7.1.0"
   resolved "https://registry.npm.taobao.org/inquirer/download/inquirer-7.1.0.tgz#1298a01859883e17c7264b82870ae1034f92dd29"
   integrity sha1-EpigGFmIPhfHJkuChwrhA0+S3Sk=
@@ -6372,7 +6407,7 @@ run-async@^2.4.0:
   resolved "https://registry.npm.taobao.org/run-async/download/run-async-2.4.1.tgz#8440eccf99ea3e70bd409d49aab88e10c189a455"
   integrity sha1-hEDsz5nqPnC9QJ1JqriOEMGJpFU=
 
-rxjs@^6.5.3, rxjs@^6.5.5:
+rxjs@^6.4.0, rxjs@^6.5.3, rxjs@^6.5.5:
   version "6.5.5"
   resolved "https://registry.npm.taobao.org/rxjs/download/rxjs-6.5.5.tgz#c5c884e3094c8cfee31bf27eb87e54ccfc87f9ec"
   integrity sha1-xciE4wlMjP7jG/J+uH5UzPyH+ew=
