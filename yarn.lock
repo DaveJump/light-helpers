@@ -1281,14 +1281,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/shelljs@^0.8.8":
-  version "0.8.8"
-  resolved "https://registry.npm.taobao.org/@types/shelljs/download/@types/shelljs-0.8.8.tgz#e439c69929b88a2c8123c1a55e09eb708315addf"
-  integrity sha1-5DnGmSm4iiyBI8GlXgnrcIMVrd8=
-  dependencies:
-    "@types/glob" "*"
-    "@types/node" "*"
-
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/@types/stack-utils/download/@types/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"

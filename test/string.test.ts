@@ -1,13 +1,4 @@
-import { isString, capitalize, genUID } from '../src/string'
-
-describe('isString', () => {
-  test("'str' => string", () => {
-    expect(isString('str')).toBe(true)
-  })
-  test('10 => !string', () => {
-    expect(isString(10)).not.toBe(true)
-  })
-})
+import { capitalize, genUID } from '../src/string'
 
 describe('capitalize', () => {
   test("'cat' => 'Cat'", () => {

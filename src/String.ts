@@ -1,13 +1,4 @@
 /**
- * Inspect an value as string-type
- * @param value value to be inspected
- * @returns if value is string-type
- */
-export function isString(value: any): value is string {
-  return Object.prototype.toString.call((value as string)) === '[object String]'
-}
-
-/**
  * Capitalize every words in a string-sentence
  * @param str source string
  * @returns capitalized string

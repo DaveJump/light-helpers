@@ -1,10 +1,35 @@
-import { Types } from './Lang'
+import {isObject} from './Lang'
 
 /**
- * Inspect an value as plain-object-type
- * @param value value to be inspected
- * @returns if value is plain-object-type
+ * Transfrom and index-number-key object to an array deeply
+ * @param obj source object
+ * @returns transformed array
  */
-export function isObject(value: any): value is Types.AnyObject {
-  return Object.prototype.toString.call((value as Types.AnyObject)) === '[object Object]'
+export function object2Array(obj?: Record<number, any>): any[] {
+  let nums: any[] = []
+
+  if (!obj) return nums
+
+  const keys = Object.keys(obj)
+
+  keys.forEach(function(key) {
+    key = key.trim()
+    if (/^\d+$/.test(key)) {
+      if (+key >= 0) {
+        nums.push(key)
+      }
+    }
+  })
+  nums = Array.from(new Set(nums))
+
+  if (!nums.length) return []
+
+  const len = Math.max(...nums)
+  const arr = new Array(len)
+  nums.forEach(function(key) {
+    const _value = obj[key]
+    arr[key] = isObject(_value) ? object2Array(_value) : _value
+  })
+
+  return arr
 }

@@ -73,7 +73,7 @@
 						<section class="tsd-index-section ">
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_object_.html#isobject" class="tsd-kind-icon">is<wbr>Object</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="_object_.html#object2array" class="tsd-kind-icon">object2<wbr>Array</a></li>
 							</ul>
 						</section>
 					</div>
@@ -82,34 +82,34 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
-					<a name="isobject" class="tsd-anchor"></a>
-					<h3>is<wbr>Object</h3>
+					<a name="object2array" class="tsd-anchor"></a>
+					<h3>object2<wbr>Array</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Object<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">value</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">Types.AnyObject</span></li>
+						<li class="tsd-signature tsd-kind-icon">object2<wbr>Array<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/DaveJump/light-helpers/blob/c7001c1/src/Object.ts#L8">Object.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/DaveJump/light-helpers/blob/3b56d15/src/Object.ts#L8">Object.ts:8</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Inspect an value as plain-object-type</p>
+									<p>Transfrom and index-number-key object to an array deeply</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>value: <span class="tsd-signature-type">any</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> obj: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>value to be inspected</p>
+										<p>source object</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">value</span><span class="tsd-signature-symbol"> is </span><span class="tsd-signature-type">Types.AnyObject</span></h4>
-							<p>if value is plain-object-type</p>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
+							<p>transformed array</p>
 						</li>
 					</ul>
 				</section>
@@ -133,15 +133,12 @@
 					<li class=" tsd-kind-module">
 						<a href="_string_.html">&quot;<wbr>String&quot;</a>
 					</li>
-					<li class=" tsd-kind-module">
-						<a href="_index_.html">&quot;index&quot;</a>
-					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-function tsd-parent-kind-module">
-						<a href="_object_.html#isobject" class="tsd-kind-icon">is<wbr>Object</a>
+						<a href="_object_.html#object2array" class="tsd-kind-icon">object2<wbr>Array</a>
 					</li>
 				</ul>
 			</nav>
@@ -153,7 +150,6 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 			</ul>
 		</div>

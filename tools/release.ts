@@ -10,8 +10,8 @@ const checkBranchIsOnMaster: () => Promise<boolean> | void = async () => {
   const branch = await getBranch(process.cwd())
   if (branch !== 'master') {
     console.log(
-      chalk.red(
-        `\n\nERROR: You are now on branch ${chalk.yellow(
+      chalk.redBright(
+        `\nERROR: You are now on branch ${chalk.yellow(
           branch
         )}, you must commit or stash your changes and checkout to branch "master" before releasing a version.`
       )
@@ -22,13 +22,13 @@ const checkBranchIsOnMaster: () => Promise<boolean> | void = async () => {
 }
 
 // Input version to release
-const defaultVersion = pkg.version.replace(/(\d+\.)(\d+)(\.\d+)/, (m, g1, g2, g3) => g1 + (+g2 + 1) + g3)
+const defaultVersion = pkg.version.replace(/(\d+\.\d+)(\.\d+)/, (m, g1, g2) => g1 + (+g2 + 1))
 const receiveVersion: () => Promise<string> = async () => {
   const answers = await inquirer.prompt([
     {
       name: 'version',
       type: 'input',
-      message: `Enter release version (default to 'minor')`
+      message: `Enter release version (default to 'patch')`
     }
   ])
   return answers.version.trim() || defaultVersion
@@ -38,10 +38,10 @@ const defaultCommitMsg = 'chore(all): release changes'
 
 // Check uncommit changes
 const checkUncommits: () => Promise<string> = async () => {
-  let { stdout: uncommits } = await execCommand('git', ['status', '--porcelain'], 'pipe')
+  let { stdout: uncommits } = await execCommand('git', ['status', '--porcelain'])
   if (uncommits) {
     console.log(
-      chalk.yellow(`\n\nYou have uncommit changes, commit them to continue or exit and commit manually.`)
+      chalk.yellow(`\nYou have uncommit changes, commit them to continue or exit and commit manually.`)
     )
     const answers = await inquirer.prompt([
       {
@@ -58,31 +58,35 @@ const checkUncommits: () => Promise<string> = async () => {
 // Sync remote origin if there are uncommit changes
 const pushToRemote: (commitMsg?: string) => Promise<void> = async (commitMsg = defaultCommitMsg) => {
   const spinner = log.processing.start('Pushing to remote origin...')
-  await execCommand('git', ['add', '.'], 'pipe')
-  // await execCommand('git', ['commit', '-m', `"${commitMsg}"`], 'pipe')
-  // await execCommand('git', ['push', 'origin', '-u', 'master'], 'pipe')
+  await execCommand('git', ['add', '.'])
+  await execCommand('git', ['commit', '-m', `"${commitMsg}"`])
+  await execCommand('git', ['push', 'origin', '-u', 'master'])
   spinner.stop()
 }
 
 // runVersion
 const runVersion: (version: string) => Promise<any> = async (version) => {
   const spinner = log.processing.start(`Releasing version ${version}`)
-  await execCommand('npm', ['version', `${version}`, '--message', `"[release] ${version}"`], 'inherit')
-  // await execCommand('npm', ['publish', '--access', 'public'], 'pipe')
+  await execCommand('npm', ['version', `${version}`, '--message', `"[release] ${version}"`])
+  await execCommand('npm', ['publish', '--access', 'public'])
   spinner.stop()
 }
 
 const runRelease: () => Promise<any> = async () => {
-  await checkBranchIsOnMaster()
-  const version = await receiveVersion()
-  const commitMsg = await checkUncommits()
-  if (commitMsg) {
-    await pushToRemote(commitMsg)
+  try {
+    await checkBranchIsOnMaster()
+    const version = await receiveVersion()
+    const commitMsg = await checkUncommits()
+    if (commitMsg) {
+      await pushToRemote(commitMsg)
+    }
+    await runVersion(version)
+    console.log(
+      chalk.green(`\nReleased version ${version || defaultVersion} successfully.`)
+    )
+  } catch (e) {
+    process.exit(1)
   }
-  await runVersion(version)
-  console.log(
-    chalk.green(`\n\nReleased version ${version || defaultVersion} successfully.`)
-  )
 }
 
 runRelease()

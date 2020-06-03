@@ -28,34 +28,21 @@ export const log: LogType = {
     console.log(chalk.green(text))
   },
   error(text) {
-    console.log(chalk.red(text))
+    console.log(chalk.redBright(text))
   }
 }
 
 export async function execCommand(
   command: string,
   args: readonly string[],
-  stdio: "inherit" | "pipe" = 'inherit',
+  stdio: "inherit" | "pipe" = 'pipe',
   cwd: string = process.cwd()
 ): Promise<Partial<Pick<execa.ExecaReturnBase<string>, 'exitCode' | 'stdout' | 'stderr'>>> {
-  return new Promise(async (resolve, reject) => {
-    if (stdio === 'inherit') {
-      const child = execa(command, args, { cwd, stdio })
-
-      child.on('close', code => {
-        console.log(code, '--code--')
-        if (code !== 0) {
-          reject(`command failed: ${command} ${args.join(' ')}`)
-        }
-        resolve({ exitCode: code })
-      })
-    } else if (stdio === 'pipe') {
-      const { exitCode, stdout, stderr } = await execa(command, args, { cwd, stdio })
-
-      if (exitCode !== 0) {
-        reject(`command failed: ${command} ${args.join(' ')}`)
-      }
-      resolve({ exitCode, stdout, stderr })
-    }
-  })
+  try {
+    const { exitCode, stdout, stderr } = await execa(command, args, { cwd, stdio })
+    return { exitCode, stdout, stderr }
+  } catch (e) {
+    stdio === 'pipe' && console.log(chalk.redBright('\n' + e))
+    process.exit(1)
+  }
 }

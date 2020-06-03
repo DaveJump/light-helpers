@@ -37,7 +37,7 @@ const buildByRollup: TaskFunc = async (cb) => {
 
 // Generate docs
 const genDocs: TaskFunc = async (cb) => {
-  gulp.src('src/**/*.ts').pipe(typedoc({
+  gulp.src(['src/**/*.ts', '!src/**/index.ts']).pipe(typedoc({
     module: 'commonjs',
     target: 'es5',
     out: 'docs/',
